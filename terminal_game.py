@@ -147,7 +147,7 @@ Welcome to the Day in my Life: Terminal Game!""")
                 break
             elif choice4 == 2:
                 print("\nYou had fun playing videogame, but you are exhausted the next day.")
-                score += 10
+                score -= 10
                 break
             else:
                 print("\nInvalid choice. Please try again.")
