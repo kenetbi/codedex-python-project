@@ -1,3 +1,5 @@
+import random
+
 current_score = 0
 questions_answered = 0
 
@@ -22,17 +24,20 @@ science = [{"question": "What is the chemical symbol for water?", "options": ["A
             {"question": "What is the largest organ in the human body?", "options": ["A: Heart", "B: Liver", "C: Skin", "D: Brain"], "answer": "C"},
             {"question": "What is the process by which plants make their food?", "options": ["A: Photosynthesis", "B: Respiration", "C: Transpiration", "D: Fermentation"], "answer": "A"}]
     
-def correct_answer(answer, topic):
+def progress(answer, topic_name):
     global current_score
     global questions_answered
-    if answer == topic[questions_answered]["answer"]:
+    if answer == topic_name[questions_answered]["answer"]:
         current_score += 1
+        print("Correct!")
+    else:
+        print("Incorrect.")
+    questions_answered += 1
 
 def question_prompt(topic_name):
     global science
     global history
     global math
-    global questions_answered
 
     if topic_name == "math":
         topic_name = math
@@ -40,16 +45,44 @@ def question_prompt(topic_name):
         topic_name = history
     elif topic_name == "science":
         topic_name = science
-
+    else:
+        print("\nInvalid topic. Please choose Math, History, or Science.")
+        return question_prompt(input("Choose a quiz topic (Math, History, Science): ").lower())
+    
+    random.shuffle(topic_name)
     for q in topic_name:
         print(q["question"])
         for option in q["options"]:
             print(option)
+        user_answer_prompt(topic_name)
 
-        user_answer = input("Enter your answer (A, B, C, or D): ").upper()
-        correct_answer(user_answer, topic_name)
+
+def user_answer_prompt(topic_name):
+    user_answer = input("Enter your answer (A, B, C, or D): ").upper()
+    if user_answer not in ["A", "B", "C", "D"]:
+        print("\nInvalid input. Please enter A, B, C, or D.")
+        return user_answer_prompt(topic_name)
+    else:
+        progress(user_answer, topic_name)
         print("")
 
+print("===================================================")
+print("            Welcome to the Quiz Game!")
+print("===================================================")
+print("\nTest your knowledge in Math, History, or Science.")
+print("Answer the questions by entering A, B, C, or D.")
+print("Your score will be displayed at the end of the quiz.")
+print("Good luck!\n")
+print("Let's get started!")
 
 topics = input("Choose a quiz topic (Math, History, Science): ").lower()
 question_prompt(topics)
+
+print("Quiz completed!")
+print(f"Your Final Score is {current_score} out of 5.")
+if current_score == 5:
+    print("Excellent work! You got a perfect score!")
+elif current_score < 3:
+    print("Better luck next time! Keep practicing to improve your score!")
+else:
+    print("Great job! You scored above average!")
