@@ -1,5 +1,3 @@
-import random
-
 current_score = 0
 questions_answered = 0
 
@@ -61,7 +59,7 @@ def user_answer_prompt(topic_name):
     while user_answer not in ["A", "B", "C", "D"]:
         print("\nInvalid input. Please enter A, B, C, or D.")
         user_answer = input("Enter your answer (A, B, C, or D): ").upper()
-        
+
     progress(user_answer, topic_name)
     print("")
 
