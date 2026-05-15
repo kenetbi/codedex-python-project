@@ -4,7 +4,7 @@ current_score = 0
 questions_answered = 0
 
 
-math  = [{"question": "What is 2 + 2?", "options": ["A: 3", "B: 4", "C: 5", "D: 6"], "answer": "B"},
+math = [{"question": "What is 2 + 2?", "options": ["A: 3", "B: 4", "C: 5", "D: 6"], "answer": "B"},
             {"question": "What is 5 * 6?", "options": ["A: 30", "B: 35", "C: 25", "D: 40"], "answer": "A"},
             {"question": "What is 10 / 2?", "options": ["A: 2", "B: 4", "C: 5", "D: 6"], "answer": "C"},
             {"question": "What is 9 - 3?", "options": ["A: 5", "B: 6", "C: 7", "D: 8"], "answer": "B"},
@@ -24,24 +24,34 @@ science = [{"question": "What is the chemical symbol for water?", "options": ["A
             {"question": "What is the largest organ in the human body?", "options": ["A: Heart", "B: Liver", "C: Skin", "D: Brain"], "answer": "C"},
             {"question": "What is the process by which plants make their food?", "options": ["A: Photosynthesis", "B: Respiration", "C: Transpiration", "D: Fermentation"], "answer": "A"}]
     
-def correct_answer(user_answer, topic):
+def correct_answer(answer, topic):
     global current_score
-    questions_answered += 1
-    if user_answer == topic[questions_answered]["answer"]:
-        print("Correct!")
+    global questions_answered
+    if answer == topic[questions_answered]["answer"]:
         current_score += 1
 
-def question_prompt(topic):
-    global science_quizx
-    global history_quiz
-    global math_quiz
-    for q in topic:
+def question_prompt(topic_name):
+    global science
+    global history
+    global math
+    global questions_answered
+
+    if topic_name == "math":
+        topic_name = math
+    elif topic_name == "history":
+        topic_name = history
+    elif topic_name == "science":
+        topic_name = science
+
+    for q in topic_name:
         print(q["question"])
         for option in q["options"]:
             print(option)
 
+        user_answer = input("Enter your answer (A, B, C, or D): ").upper()
+        correct_answer(user_answer, topic_name)
+        print("")
 
-topic = input("Choose a quiz topic (Math, History, Science): ").lower()
-question_prompt(topic)
 
-user_answer = input("Enter your answer (A, B, C, or D): ")
+topics = input("Choose a quiz topic (Math, History, Science): ").lower()
+question_prompt(topics)
