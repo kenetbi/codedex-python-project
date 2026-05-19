@@ -1,3 +1,8 @@
+print("===============================")
+print("Welcome to Leap year Calculator")
+print("===============================")
+print("")
+
 while True:
     year = int(input("Input a year: "))
 
@@ -8,4 +13,4 @@ while True:
     elif year % 4 == 0:
         print("Leap Year")
     else:
-        print("It is a common year")
+        print("It is a common year") 
