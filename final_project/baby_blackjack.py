@@ -62,29 +62,25 @@ while player_turn:
     time.sleep(2)
     action = input("\nDo you 'hit' or 'stand'? ").lower().strip()
 
-    while True:
-        if action == "hit":
-            player_hit = random.choice(cards)
-            print(f"You draw: {player_hit}")
-            cards.remove(player_hit)
-            player.append(player_hit)
+    if action == "hit":
+        player_hit = random.choice(cards)
+        print(f"You draw: {player_hit}")
+        cards.remove(player_hit)
+        player.append(player_hit)
 
-            print(f"Player's card:", end=" | ")
-            for card in player:
-                print(f"{card}", end=" | ")
-            print("")
+        print(f"Player's card:", end=" | ")
+        for card in player:
+            print(f"{card}", end=" | ")
+        print("")
 
-            if isinstance(player_hit, int):
-                player_total += player_hit
-            elif player_hit == "jack" or player_hit == "queen" or player_hit == "king":
-                player_total += 10
-            break
-        elif action == "stand":
-            player_turn = False
-            break
-        else:
-            print("Invalid Input!")
-            break
+        if isinstance(player_hit, int):
+            player_total += player_hit
+        elif player_hit == "jack" or player_hit == "queen" or player_hit == "king":
+            player_total += 10
+    elif action == "stand":
+        player_turn = False
+    else:
+        print("Invalid Input!")
 
 if not is_player_busted:
     print("\nThe dealer will now reveal his face-down card.")
@@ -115,6 +111,6 @@ if not is_player_busted:
             print(f"The Dealer's total: {dealer_total}.")
             print("The dealer stands.")
             break
-        
+
     if not is_dealer_busted:
         is_winner(player_total, dealer_total)
