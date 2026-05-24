@@ -36,7 +36,7 @@ def is_winner(player_total, dealer_total):
         print("\n It's a TIE!")
 
 
-dealer = random.sample(cards, 2)
+dealer = ["ace", "king"]
 player = random.sample(cards, 2)
 
 for card in dealer:
@@ -124,53 +124,54 @@ if not is_player_blackjack:
             dealer_turn = True
         else:
             print("Invalid input, Try again!")
-
-print("\nThe dealer will now reveal his face-down card.")
-print(f"Dealer's card: {dealer[0]} | {dealer[1]}")
-if dealer_total == 21 and len(dealer) == 2:
-            print("Dealer has BLACKJACK!")
-            is_dealer_blackjack = True
-
-if not is_player_busted and not is_dealer_blackjack:
     
-    while dealer_turn:
-        time.sleep(2)
-        if not is_player_blackjack:
-            if dealer_total > 21:
-                print(f"Dealer total: {dealer_total}")
-                is_dealer_busted = True
-                is_busted(is_player_busted, is_dealer_busted)
+if not is_player_busted:
+    print("\nThe dealer will now reveal his face-down card.")
+    print(f"Dealer's card: {dealer[0]} | {dealer[1]}")
+    if dealer_total == 21 and len(dealer) == 2:
+                print("Dealer has BLACKJACK!")
+                is_dealer_blackjack = True
+    
+    if not is_dealer_blackjack:
+        while dealer_turn:
+            time.sleep(2)
+            if not is_player_blackjack:
+                if dealer_total > 21:
+                    print(f"Dealer total: {dealer_total}")
+                    is_dealer_busted = True
+                    is_busted(is_player_busted, is_dealer_busted)
+                    break
+
+                if dealer_total <= 16:
+                    print("\nThe dealer will now draw a card.")
+                    dealer_hit = random.choice(cards)
+                    cards.remove(dealer_hit)
+                    dealer.append(dealer_hit)
+
+                    if isinstance(dealer_hit, int):
+                        dealer_total += dealer_hit
+                    elif dealer_hit in ["jack", "queen", "king"]:
+                        dealer_total += 10
+                    elif dealer_hit == "ace":
+                        dealer_total += 11
+                        dealer_aces += 1
+
+                    while dealer_total > 21 and dealer_aces > 0:
+                        dealer_total -= 10
+                        dealer_aces -= 1
+                else:
+                    print(f"The Dealer's total: {dealer_total}.")
+                    print("The dealer stands.")
+                    break
+                print("Dealer's card:", end=" | ")
+                for card in dealer:
+                    print(f"{card}", end=" | ")
+                print("\n") 
+            else:
                 break
 
-            if dealer_total <= 16:
-                print("\nThe dealer will now draw a card.")
-                dealer_hit = random.choice(cards)
-                cards.remove(dealer_hit)
-                dealer.append(dealer_hit)
-
-                if isinstance(dealer_hit, int):
-                    dealer_total += dealer_hit
-                elif dealer_hit in ["jack", "queen", "king"]:
-                    dealer_total += 10
-                elif dealer_hit == "ace":
-                    dealer_total += 11
-                    dealer_aces += 1
-
-                while dealer_total > 21 and dealer_aces > 0:
-                    dealer_total -= 10
-                    dealer_aces -= 1
-            else:
-                print(f"The Dealer's total: {dealer_total}.")
-                print("The dealer stands.")
-            print("Dealer's card:", end=" | ")
-            for card in dealer:
-                print(f"{card}", end=" | ")
-            print("\n") 
-        else:
-            break
-
-    if not is_dealer_busted and not is_player_blackjack:
-        is_winner(player_total, dealer_total)
+        if not is_dealer_busted and not is_player_blackjack:
+            is_winner(player_total, dealer_total)
 
 if is_player_blackjack and is_dealer_blackjack:
     print("Both has BLACKJACK!\nIt's a TIE!")
