@@ -148,6 +148,11 @@ if not is_player_busted:
                     cards.remove(dealer_hit)
                     dealer.append(dealer_hit)
 
+                    print("Dealer's card:", end=" | ")
+                    for card in dealer:
+                        print(f"{card}", end=" | ")
+                    print("\n") 
+
                     if isinstance(dealer_hit, int):
                         dealer_total += dealer_hit
                     elif dealer_hit in ["jack", "queen", "king"]:
@@ -163,10 +168,6 @@ if not is_player_busted:
                     print(f"The Dealer's total: {dealer_total}.")
                     print("The dealer stands.")
                     break
-                print("Dealer's card:", end=" | ")
-                for card in dealer:
-                    print(f"{card}", end=" | ")
-                print("\n") 
             else:
                 break
 
